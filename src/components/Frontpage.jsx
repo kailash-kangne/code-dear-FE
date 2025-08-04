@@ -1,4 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
+function generateRandomPath() {
+  return "/" + Math.random().toString(36).slice(2, 8);
+}
 
 const Frontpage = () => {
   return (
@@ -26,18 +31,20 @@ const Frontpage = () => {
             Built with passion for <u>Dear Coders</u> like <u>You</u>.
           </p>
           <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-            <button
+            <Link
               type="button"
               className="btn btn-primary btn-lg px-4 me-md-2"
+              to={generateRandomPath()}
             >
               Start FREE
-            </button>
-            <button
+            </Link>
+            <Link
               type="button"
               className="btn btn-outline-secondary btn-lg px-4"
+              to="/pricing"
             >
               Go PRO
-            </button>
+            </Link>
           </div>
         </div>
       </div>

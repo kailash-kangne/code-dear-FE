@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 
 const Navbar = ({ ShareCode }) => {
   const location = useLocation();
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const isFrontPage = location.pathname === "/";
   const isAuthPage =
@@ -38,13 +41,8 @@ const Navbar = ({ ShareCode }) => {
         {isFrontPage && (
           <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
-              <Link to="/features" className="nav-link px-2">
-                Features
-              </Link>
-            </li>
-            <li>
               <Link to="/pricing" className="nav-link px-2">
-                Pricing
+                Features & Pricing
               </Link>
             </li>
           </ul>
@@ -52,13 +50,13 @@ const Navbar = ({ ShareCode }) => {
         {!isAuthPage && (
           <div className="col-md-3 text-end">
             {ShareCode && (
-              <Link
+              <button
                 type="button"
                 className="btn btn-outline-primary me-2"
-                to="/"
+                onClick={() => setShowShareModal(true)}
               >
                 Share
-              </Link>
+              </button>
             )}
             <Link
               type="button"
@@ -73,6 +71,37 @@ const Navbar = ({ ShareCode }) => {
           </div>
         )}
       </header>
+
+      <Modal
+        show={showShareModal}
+        onHide={() => setShowShareModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Share Code</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex align-items-center gap-3">
+            <input
+              type="text"
+              className="form-control"
+              value={window.location.href}
+              readOnly
+              onClick={(e) => e.target.select()}
+            />
+            <Button
+              variant="primary"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+            >
+              {copied ? "Copied!" : "Copy Link"}
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
