@@ -50,13 +50,18 @@ const Navbar = ({ ShareCode }) => {
         {!isAuthPage && (
           <div className="col-md-3 text-end">
             {ShareCode && (
-              <button
-                type="button"
-                className="btn btn-outline-primary me-2"
-                onClick={() => setShowShareModal(true)}
-              >
-                Share
-              </button>
+              <>
+                <button type="button" className="btn btn-outline-primary me-2">
+                  Save
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary me-2"
+                  onClick={() => setShowShareModal(true)}
+                >
+                  Share
+                </button>
+              </>
             )}
             <Link
               type="button"
